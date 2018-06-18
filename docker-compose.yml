@@ -5,5 +5,29 @@ services:
     build: ./centos
     ports:
       - 8080:80
+    networks:
+      - overlay
     volumes:
       - ./src:/var/www/html
+    links:
+      - db
+  db:
+    image: mysql:5.6
+    # restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: todo
+      MYSQL_USER: todo-user
+      MYSQL_PASSWORD: todo-user
+    ports:
+      - "3306:3306"
+    networks:
+       - overlay
+    volumes:
+       - db-data:/var/lib/mysql/data
+
+volumes:
+  db-data:
+
+networks:
+  overlay:

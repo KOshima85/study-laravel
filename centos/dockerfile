@@ -3,16 +3,20 @@ FROM centos:7
 RUN yum update
 
 RUN yum -y install epel-release && yum -y install http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
-RUN yum -y install httpd php71 php71-php php71-php-pdo php71-php-mysqlnd
+RUN yum -y install httpd php71 php71-php php71-php-pdo php71-php-mysqlnd php-mbstring git
+
+# ADD httpd.conf /etc/httpd/conf/
+
 RUN /usr/sbin/httpd -k restart
 RUN alias php='php71'
 
 RUN /usr/bin/php71 -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && /usr/bin/php71 -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && /usr/bin/php71 composer-setup.php --install-dir=/usr/bin && /usr/bin/php71 -r "unlink('composer-setup.php');"
-RUN alias composer='php71 /usr/bin/composer.phar'
-# RUN echo "<?php phpinfo();" > /var/www/html/info.php
+RUN mv /usr/bin/composer.phar /usr/bin/composer
 
-# EXPOSE 80
+RUN ln -s /usr/bin/php71 /usr/bin/php 
 
-# ENTRYPOINT ['/usr/sbin/httpd']
+RUN mkdir -p /home/src/todo/public && chmod 755 /home/src/todo
+# RUN rm -fr /var/www/html && ln -s ~/src/todo/public /var/www/html && chmod 777 /var/www/html
+RUN echo "<?php phpinfo();" > /home/src/todo/public/index.php    
 
 CMD ["/usr/sbin/httpd","-D","FOREGROUND"]

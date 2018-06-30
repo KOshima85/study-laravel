@@ -8,7 +8,8 @@ services:
     networks:
       - overlay
     volumes:
-      - ./src:/var/www/html
+      - ./src:/home/src
+      - ./centos/conf:/etc/httpd/conf
     links:
       - db
   db:

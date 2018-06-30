@@ -3,8 +3,9 @@ FROM centos:7
 RUN yum update
 
 RUN yum -y install epel-release && yum -y install http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
-RUN yum -y install httpd php71 php71-php php71-php-pdo php71-php-mysqlnd php-mbstring git
-
+RUN yum -y install httpd php71 php71-php php71-php-pdo php71-php-mysqlnd php71-php-mbstring git
+RUN yum -y install php71-php-xml
+RUN yum install -y zip unzip
 # ADD httpd.conf /etc/httpd/conf/
 
 RUN /usr/sbin/httpd -k restart

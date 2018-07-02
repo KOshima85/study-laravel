@@ -20,7 +20,7 @@ class ListContainer extends Component {
                 <TextField
                     id="todo"
                     label="TODO"
-                    value={this.props.list.todoCHANGE_TODO}
+                    value={this.props.list.todo}
                     onChange={e=>{
                         this.props.listActions.changeTodo(e.target.value);
                     }}
@@ -34,7 +34,7 @@ class ListContainer extends Component {
                 />
                 <List component="nav">
                     {_.chain(this.props.list.list)
-                        .filter(item => (!item.isDone))
+                        .filter(item => (!item.is_done))
                         .map((item ,idx)=> {
                         return (
                             <ListItem

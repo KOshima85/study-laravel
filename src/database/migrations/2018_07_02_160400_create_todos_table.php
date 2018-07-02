@@ -20,7 +20,7 @@ class CreateTodosTable extends Migration
             $table->boolean('is_done')->default(false);
             $table->softDeletes();
             $table->double('period', 8, 2)->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('finish_at')->nullable();
         });
 

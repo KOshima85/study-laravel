@@ -3,19 +3,11 @@ import * as _ from 'lodash';
 
 
 const initialState = {
-    list:[{
-        id: 1,
-        todo: "hoge",
-        isDone: false
-    },{
-        id: 2,
-        todo: "fuga",
-        isDone: false
-    }],
+    list:[],
     todo: ""
 };
 
-const listReducer = (state = initialState,action ) =>{
+const ListReducer = (state = initialState,action ) =>{
     switch (action.type) {
         case actionTypes.CHANGE_TODO:
             return {
@@ -41,9 +33,14 @@ const listReducer = (state = initialState,action ) =>{
                 ...state,
                 list:action.list
             }
+        case actionTypes.CLEAR_TODO:
+            return {
+                ...state,
+                todo:""
+            }
         default:
             return state;
     }
 };
 
-export default listReducer;
+export default ListReducer;

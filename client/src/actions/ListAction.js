@@ -1,5 +1,6 @@
 import * as actionTypes from '../actionTypes';
 import * as api from '../apis';
+import * as _ from 'lodash';
 
 export const changeTodo = (todo) => ({
     type: actionTypes.CHANGE_TODO , todo
@@ -16,16 +17,29 @@ const setList = (list) => ({
     type: actionTypes.INIT_LIST, list
 })
 
-export const toggleTodo = (id) => ({
-    type: actionTypes.TOGGLE_TODO, id
+const clearTodo = () => ({
+    type: actionTypes.CLEAR_TODO
 })
+
+export const toggleTodo = (id) => {
+    return async (dispatch, getState) => {
+        // todoの状態で切り分け
+        const {list} = getState();
+        const todo = _.find(list.list, {id});
+        if(todo.is_done){
+
+        }else{
+            await api.doneTodo(id);
+        }
+        dispatch(initList());
+    }
+}
 
 export const submitTodo = () => {
     return async (dispatch, getState) => {
         const { list }  = getState();
-        await alert("submit");
-        console.log(list);
-        await api.postTodo({});
-        dispatch(initList);
+        await api.postTodo({todo:list.todo});
+        dispatch(initList());
+        dispatch(clearTodo());
     };
 };

@@ -13,7 +13,9 @@ export const  fetchTodo = () => {
 }
 
 export const  postTodo = (todo) => {
-    return new Promise((resolve)=>{
-        resolve();
-    });
+    return client.post("api/list",todo);
+}
+
+export const doneTodo = (id) => {
+    return client.put(`api/list/${id}/done`);
 }

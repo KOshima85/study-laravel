@@ -10,6 +10,10 @@ import { TextField } from '@material-ui/core';
 import * as _ from 'lodash';
 
 class ListContainer extends Component {
+    componentWillMount(){
+        this.props.listActions.initList();
+    }
+
     render(){
         return(
             <div>

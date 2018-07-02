@@ -5,9 +5,14 @@ export const changeTodo = (todo) => ({
     type: actionTypes.CHANGE_TODO , todo
 })
 
-export const initList = () =>({
-    type: actionTypes.INIT_LIST
-})
+export const initList = () =>{
+    return async (dispatch, getState) => {
+        const data = await api.fetchTodo();
+        console.log(data);
+
+        dispatch(()=> ({type: actionTypes.INIT_LIST}));
+    }
+};
 
 export const toggleTodo = (id) => ({
     type: actionTypes.TOGGLE_TODO, id

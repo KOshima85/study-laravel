@@ -3,3 +3,9 @@
 Homestead.yaml
 Homestead.json
 .env
+
+public/client/static
+public/client/*.json
+public/client/*.ico
+public/client/*.html
+public/client/*.js

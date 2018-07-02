@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'Client\ClientController@index');
+
+// Route::get('/list', 'ListController@index');

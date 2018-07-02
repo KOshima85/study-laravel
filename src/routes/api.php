@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-
+// TODO: 認証処理の追加
 Route::group(['middleware' => ['api']], function(){
     Route::resource('list', 'Apis\ListController');
 });

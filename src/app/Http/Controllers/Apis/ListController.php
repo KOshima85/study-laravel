@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Apis;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class ListController extends Controller
@@ -9,14 +10,7 @@ class ListController extends Controller
 
     public function index(){
 
-        $data = ["list"=>
-            [
-                ["id" => 1, "todo"=> "hoge", "isDone"=> true],
-                ["id" => 2, "todo"=> "fuga", "isDone"=> true],
-                ["id" => 3, "todo"=> "bar", "isDone"=> true],
-
-            ]
-        ];
+        $data = DB::table('todos')->get();
 
         return response($data, 200)
             ->header('Access-Control-Allow-Origin', 'localhost')

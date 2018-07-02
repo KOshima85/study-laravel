@@ -37,6 +37,10 @@ const listReducer = (state = initialState,action ) =>{
                 })
             }
         case actionTypes.INIT_LIST:
+            return {
+                ...state,
+                list:action.list
+            }
         default:
             return state;
     }

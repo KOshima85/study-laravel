@@ -7,12 +7,14 @@ export const changeTodo = (todo) => ({
 
 export const initList = () =>{
     return async (dispatch, getState) => {
-        const data = await api.fetchTodo();
-        console.log(data);
-
-        dispatch(()=> ({type: actionTypes.INIT_LIST}));
+        const { data:list } = await api.fetchTodo();
+        dispatch(setList(list));
     }
 };
+
+const setList = (list) => ({
+    type: actionTypes.INIT_LIST, list
+})
 
 export const toggleTodo = (id) => ({
     type: actionTypes.TOGGLE_TODO, id

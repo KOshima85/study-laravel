@@ -12,20 +12,30 @@ use Illuminate\Routing\Router;
 class ListController extends Controller
 {
 
-    public function index(){
+    public function index(Request $request){
+        $input = $request->all();
+        try{
+            if( !($input['done'] === "true" || $input['done'] === "false") ) throw new \Exception("done is not boolean");
 
-        $data = DB::table('todos')
-            ->where('deleted_at', NULL)
-            ->orderBy('is_done', 'asc')
-            ->orderBy('id', 'desc')
-            ->get();
+            $sql = DB::table('todos')
+                ->where('deleted_at', NULL)
+                ->orderBy('is_done', 'asc')
+                ->orderBy('id', 'desc');
 
-        return response($data, 200)
-            ->header('Access-Control-Allow-Origin', 'localhost')
-            ->header('Access-Control-Allow-Methods', 'GET')
-            ->header('Content-Type', 'application/json; charset=utf-8')
+            if( $input['done'] !== "true" ) $sql->where('is_done', $input['done'] === "true" );
 
-        ;
+            $data = $sql->get();
+
+            return response($data, 200)
+                ->header('Access-Control-Allow-Origin', 'localhost')
+                ->header('Access-Control-Allow-Methods', 'GET')
+                ->header('Content-Type', 'application/json; charset=utf-8')
+            ;
+        }catch(Exception $e){
+            Log::error( $e );
+            return response($e, 400);
+        }
+
     }
 
     public function store(Request $request){

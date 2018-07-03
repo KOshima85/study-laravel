@@ -4,7 +4,8 @@ import * as _ from 'lodash';
 
 const initialState = {
     list:[],
-    todo: ""
+    todo: "",
+    showDone: false
 };
 
 const ListReducer = (state = initialState,action ) =>{
@@ -37,6 +38,11 @@ const ListReducer = (state = initialState,action ) =>{
             return {
                 ...state,
                 todo:""
+            }
+        case actionTypes.SET_SHOW_DONE:
+            return {
+                ...state,
+                showDone: action.showDone
             }
         default:
             return state;

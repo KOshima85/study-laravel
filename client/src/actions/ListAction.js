@@ -8,8 +8,9 @@ export const changeTodo = (todo) => ({
 
 export const initList = () =>{
     return async (dispatch, getState) => {
-        const { data:list } = await api.fetchTodo();
-        dispatch(setList(list));
+        const { list:state } = getState();
+        const { data } = await api.fetchTodo(state.showDone);
+        dispatch(setList(data));
     }
 };
 
@@ -50,3 +51,16 @@ export const deleteTodo = (id) => {
         dispatch(initList());
     };
 };
+
+
+export const toggleShowDone = () => {
+    return async (dispatch, getState) =>{
+        const { list } = getState();
+        await dispatch(setShowDone(!list.showDone));
+        dispatch(initList());
+    }
+}
+
+export const setShowDone = (showDone) => ({
+    type: actionTypes.SET_SHOW_DONE, showDone
+});

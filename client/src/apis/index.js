@@ -8,8 +8,8 @@ const client = axios.create({
 	},
   });
 
-export const  fetchTodo = () => {
-    return client.get("api/list")
+export const  fetchTodo = (showDone) => {
+    return client.get(`api/list?done=${showDone}`)
 }
 
 export const  postTodo = (todo) => {

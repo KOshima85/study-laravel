@@ -7,6 +7,8 @@ import * as listActions from '../actions/ListAction';
 // material ui
 import { List, ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
 import { IconButton } from '@material-ui/core';
+import { Switch } from '@material-ui/core';
+import { FormControlLabel } from '@material-ui/core';
 import CheckedIcon from '@material-ui/icons/Done';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { TextField } from '@material-ui/core';
@@ -36,6 +38,14 @@ class ListContainer extends Component {
                     helperText="input TODO"
                     margin="normal"
                     autoFocus
+                />
+                <FormControlLabel
+                    control={<Switch
+                        checked={this.props.list.showDone}
+                        onChange={this.props.listActions.toggleShowDone}
+                        value="showDone"
+                    />}
+                    label="完了したものを表示する"
                 />
                 <List component="nav">
                     {_.chain(this.props.list.list)

@@ -15,6 +15,8 @@ class ListController extends Controller
     public function index(){
 
         $data = DB::table('todos')
+            ->where('deleted_at', NULL)
+            ->orderBy('is_done', 'asc')
             ->orderBy('id', 'desc')
             ->get();
 
@@ -45,5 +47,18 @@ class ListController extends Controller
         DB::table('todos')
         ->where('id', $todo_id)
         ->update(['is_done' => true]);
+    }
+
+
+    public function do($todo_id){
+        DB::table('todos')
+        ->where('id', $todo_id)
+        ->update(['is_done' => false]);
+    }
+
+    public function deleteTodo($todo_id){
+        DB::table('todos')
+        ->where('id', $todo_id)
+        ->update(['deleted_at' => DB::raw('CURRENT_TIMESTAMP')]);
     }
 }

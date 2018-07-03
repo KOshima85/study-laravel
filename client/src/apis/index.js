@@ -19,3 +19,11 @@ export const  postTodo = (todo) => {
 export const doneTodo = (id) => {
     return client.put(`api/list/${id}/done`);
 }
+
+export const doTodo = (id) => {
+    return client.put(`api/list/${id}/do`);
+}
+
+export const deleteTodo = (id) => {
+    return client.delete(`api/list/${id}`);
+}

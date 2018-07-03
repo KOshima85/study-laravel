@@ -15,9 +15,12 @@ use Illuminate\Http\Request;
 
 // TODO: 認証処理の追加
 Route::group(['middleware' => ['api']], function(){
-    Route::resource('list', 'Apis\ListController');
+    // Route::resource('list', 'Apis\ListController');
+    Route::get('list', 'Apis\ListController@index');
+    Route::post('list', 'Apis\ListController@store');
+    Route::delete('list/{todo_id}', 'Apis\ListController@deleteTodo');
     Route::put('list/{todo_id}/done','Apis\ListController@done')->where('todo_id', '[0-9]+');
-    // TODO:toggle is_done
+    Route::put('list/{todo_id}/do','Apis\ListController@do')->where('todo_id', '[0-9]+');
 });
 
 

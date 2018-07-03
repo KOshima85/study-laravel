@@ -5,8 +5,12 @@ import { bindActionCreators } from 'redux';
 import * as listActions from '../actions/ListAction';
 
 // material ui
-import { List, ListItem, ListItemText } from '@material-ui/core';
+import { List, ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
+import CheckedIcon from '@material-ui/icons/Done';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { TextField } from '@material-ui/core';
+import { green } from '@material-ui/core/colors';
 import * as _ from 'lodash';
 
 class ListContainer extends Component {
@@ -31,10 +35,11 @@ class ListContainer extends Component {
                     }}
                     helperText="input TODO"
                     margin="normal"
+                    autoFocus
                 />
                 <List component="nav">
                     {_.chain(this.props.list.list)
-                        .filter(item => (!item.is_done))
+                        // .filter(item => (!item.is_done))
                         .map((item ,idx)=> {
                         return (
                             <ListItem
@@ -42,7 +47,17 @@ class ListContainer extends Component {
                                 key={idx}
                                 onClick={()=>{this.props.listActions.toggleTodo(item.id)}}
                             >
+                                {item.is_done ? (
+                                    <CheckedIcon style={{fill:green[400]}}/>
+                                ) : (<div></div>)}
                                 <ListItemText primary={item.todo} />
+                                <ListItemSecondaryAction>
+                                    <IconButton
+                                        onClick={()=>{this.props.listActions.deleteTodo(item.id)}}
+                                    >
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </ListItemSecondaryAction>
                             </ListItem>
                         )
                     }).value()}

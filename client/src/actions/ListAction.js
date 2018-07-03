@@ -27,7 +27,7 @@ export const toggleTodo = (id) => {
         const {list} = getState();
         const todo = _.find(list.list, {id});
         if(todo.is_done){
-
+            await api.doTodo(id);
         }else{
             await api.doneTodo(id);
         }
@@ -41,5 +41,12 @@ export const submitTodo = () => {
         await api.postTodo({todo:list.todo});
         dispatch(initList());
         dispatch(clearTodo());
+    };
+};
+
+export const deleteTodo = (id) => {
+    return async (dispatch, getState) => {
+        await api.deleteTodo(id);
+        dispatch(initList());
     };
 };
